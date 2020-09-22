@@ -66,7 +66,7 @@ def make_nysm_map(etime,time1,dropzeros=True):
    nys = add_shape_coord_from_data_array()
 
    #plt.figure(figsize=(10,10))
-   ax = gplt.polyplot(nys,facecolor='None',edgecolor='black',projection=gcrs.LambertConformal())
+   ax = gplt.polyplot(nys,figsize=(8,8),facecolor='None',edgecolor='black',projection=gcrs.LambertConformal())
    levels = [0.,1.,2.,6.,10.,15.,20.,30.,40.,50.,70.,90.,110.,130.,150.,200.,300.]
    norm = BoundaryNorm(levels, 16)
    c1 = ax.scatter(lons, lats, c=precip,
