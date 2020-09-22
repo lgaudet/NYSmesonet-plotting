@@ -11,7 +11,7 @@ parseTime = lambda x: datetime.strptime(x, timeFormat)
 df = pd.concat([pd.read_csv(f,index_col=0,parse_dates=['time'],date_parser=parseTime) for f in sorted(glob.glob(indir+'2017*.csv'))])#, ignore_index=True)
 
 STN = df.index.unique().values.tolist()
-mtime = df['time'].unique()
+mtime = [pd.Timestamp(x) for x in df['time'].unique()]
 
 nstn = len(STN)
 ntime = len(mtime)
