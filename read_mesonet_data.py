@@ -37,6 +37,17 @@ for ii, stn in enumerate(STN):
     MAX_WIND_SPEED[ii,:] = df.loc[df.index == stn]['max_wind_speed_prop [m/s]'].values
     AVG_WIND_SPEED[ii,:] = df.loc[df.index == stn]['avg_wind_speed_prop [m/s]'].values
 
+prcp_evol = np.zeros((nstn,ntime))
+prcp_save = 0.
+for tt in range(0,ntime):
+    prcp_evol[:,tt] = prcp_save + PRECIP_INC[:,tt]
+    prcp_save = prcp_evol[:,tt]
+
+df = pd.read_csv(indir+'nysm.csv',index_col=0)
+mstn = df.index.values.tolist()
+mlat = df['lat [degrees]'].values
+mlon = df['lon [degrees]'].values
+
 def resample(var,times1,varname):
    df = pd.DataFrame(times1,columns=['date'])
    df['%s'%(varname)] = var
@@ -59,14 +70,4 @@ def resample_hrly(var,times1,varname):
    var_1hr = df.resample('1H').mean()
    return var_1hr
 
-prcp_evol = np.zeros((nstn,ntime))
-prcp_save = 0.
-for tt in range(0,ntime):
-   prcp_evol[:,tt] = prcp_save + PRECIP_INC[:,tt]
-   prcp_save = prcp_evol[:,tt]
-
-df = pd.read_csv(indir+'nysm.csv',index_col=0)
-mstn = df.index.values.tolist()
-mlat = df['lat [degrees]'].values
-mlon = df['lon [degrees]'].values
 
