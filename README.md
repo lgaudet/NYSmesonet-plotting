@@ -7,3 +7,5 @@ accum_nys_mask.py | plots the NYS mesonet accumulated precipitation (mm) on a ma
 read_mesonet_data.py | reads multiple NYS mesonet data files and extracts basic meteorological variables for later analysis & plotting.
 
 **Note:** Geojson data (gz_2010_us_040_00_500k.json) were downloaded from https://eric.clst.org/tech/usgeojson/. 
+
+![Image](https://github.com/lgaudet/NYSmesonet-plotting/blob/master/103018_accum_nysm.png)
