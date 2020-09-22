@@ -4,14 +4,12 @@ import geopandas as gpd
 import geoplot as gplt
 import geoplot.crs as gcrs
 from datetime import datetime
-from scipy.interpolate import griddata#, interp2d 
 from affine import Affine
-from rasterio import features#, fill
+from rasterio import features
 import xarray as xr
-import math 
 import cartopy.crs as ccrs
-from matplotlib.colors import Normalize, ListedColormap, BoundaryNorm
-exec(open('read_mesonet_data.py').read())
+from matplotlib.colors import ListedColormap, BoundaryNorm
+from read_mesonet_data import mlat, mlon, mstn, mtime, STN, prcp_evol
 
 #the NYSmesonet station location data includes all 126 stations
 #the NYSmesonet station meteorological data only includes 124 stations
