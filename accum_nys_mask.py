@@ -73,6 +73,10 @@ def make_nysm_map(etime,time1,dropzeros=True):
          norm=norm,marker='o',s=200,
          transform=ccrs.PlateCarree(),
          zorder=2, alpha=1.,edgecolor='black',cmap=precip_colormap)
+   ax.text(0.95, 0.01, 'Plot by L. Gaudet',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax.transAxes,
+        color='grey', fontsize=10)
    cbar = plt.colorbar(c1, ticks=levels)
    cbar.set_label('Precipitation (mm)',rotation=90)
    plt.title(f'{str(time1.hour).zfill(2)} UTC {time1.day}-{time1.month}-{time1.year}',fontsize=18)
