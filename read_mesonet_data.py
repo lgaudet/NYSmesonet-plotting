@@ -70,4 +70,17 @@ def resample_hrly(var,times1,varname):
    var_1hr = df.resample('1H').mean()
    return var_1hr
 
+def get_nysm_data(station):
+    indir = '/glade/work/lgaudet/research/data/'
+    df = pd.read_csv(indir+'nysm.csv',index_col=0)
+    mstn = df.index.values.tolist()
+    mlat = df['lat [degrees]'].values
+    mlon = df['lon [degrees]'].values
+    name = df['name'].values
+
+    mloc = mstn.index(station)
+    mesolat, mesolon = mlat[mloc], mlon[mloc]
+    mname = name[mloc]
+    loc = STN.index(station)
+    return mesolat, mesolon, mname, loc
 
