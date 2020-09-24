@@ -70,6 +70,10 @@ def make_meteogram(station):
     plt.xlim(datetime(2017,10,29,0),datetime(2017,10,30,12))
     remove_axis_spines(ax4)
     
+    ax4.text(1., 0.01, 'Plot by L. Gaudet',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax4.transAxes,
+        color='grey', fontsize=10)
     plt.suptitle(f'Meteogram for {mname}', fontweight='bold')
     plt.tight_layout(rect=[0,0.03,1,0.95])
     plt.savefig(f'./nysm_meteogram_{station}.png', type='png',dpi=300)
