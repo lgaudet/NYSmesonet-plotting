@@ -8,10 +8,10 @@ indir = '/glade/work/lgaudet/research/data/'
 timeFormat = '%Y-%m-%d %H:%M:%S UTC'
 parseTime = lambda x: datetime.strptime(x, timeFormat)
 
-df = pd.concat([pd.read_csv(f,index_col=0,parse_dates=['time'],date_parser=parseTime) for f in sorted(glob.glob(indir+'2017*.csv'))])#, ignore_index=True)
-
-STN = df.index.unique().values.tolist()
-mtime = [pd.Timestamp(x) for x in df['time'].unique()]
+df = pd.concat([pd.read_csv(f,parse_dates=['time'],date_parser=parseTime) for f in sorted(glob.glob(indir+'2017*.csv'))])
+df.set_index(['station','time'], inplace = True)
+mtime = pd.to_datetime(df.index.levels[1].values)
+STN = df.index.levels[0].values.tolist()
 
 nstn = len(STN)
 ntime = len(mtime)
@@ -26,16 +26,16 @@ WIND_DIRECTION = np.zeros((nstn,ntime))
 MAX_WIND_SPEED = np.zeros((nstn,ntime))
 AVG_WIND_SPEED = np.zeros((nstn,ntime))
 for ii, stn in enumerate(STN):
-    RH[ii,:] = df.loc[df.index == stn]['relative_humidity [percent]'].values
-    PRECIP_INC[ii,:] = df.loc[df.index == stn]['precip_incremental [mm]'].values
-    PRECIP_LOC[ii,:] = df.loc[df.index == stn]['precip_local [mm]'].values
-    PRECIP_MAX_INT[ii,:] = df.loc[df.index == stn]['precip_max_intensity [mm/min]'].values
-    TEMP_2M[ii,:] = df.loc[df.index == stn]['temp_2m [degC]'].values
-    TEMP_9M[ii,:] = df.loc[df.index == stn]['temp_9m [degC]'].values
-    PRESSURE[ii,:] = df.loc[df.index == stn]['station_pressure [mbar]'].values
-    WIND_DIRECTION[ii,:] = df.loc[df.index == stn]['wind_direction_prop [degrees]'].values
-    MAX_WIND_SPEED[ii,:] = df.loc[df.index == stn]['max_wind_speed_prop [m/s]'].values
-    AVG_WIND_SPEED[ii,:] = df.loc[df.index == stn]['avg_wind_speed_prop [m/s]'].values
+    RH[ii,:] = df.loc[stn,'relative_humidity [percent]'].values
+    PRECIP_INC[ii,:] = df.loc[stn,'precip_incremental [mm]'].values
+    PRECIP_LOC[ii,:] = df.loc[stn,'precip_local [mm]'].values
+    PRECIP_MAX_INT[ii,:] = df.loc[stn,'precip_max_intensity [mm/min]'].values
+    TEMP_2M[ii,:] = df.loc[stn,'temp_2m [degC]'].values
+    TEMP_9M[ii,:] = df.loc[stn,'temp_9m [degC]'].values
+    PRESSURE[ii,:] = df.loc[stn,'station_pressure [mbar]'].values
+    WIND_DIRECTION[ii,:] = df.loc[stn,'wind_direction_prop [degrees]'].values
+    MAX_WIND_SPEED[ii,:] = df.loc[stn,'max_wind_speed_prop [m/s]'].values
+    AVG_WIND_SPEED[ii,:] = df.loc[stn,'avg_wind_speed_prop [m/s]'].values
 
 prcp_evol = np.zeros((nstn,ntime))
 prcp_save = 0.
