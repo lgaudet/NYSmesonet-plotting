@@ -37,10 +37,13 @@ def make_meteogram(station):
     ax1.set_ylim(np.nanmin(TEMP_2M[loc,:])-1,np.nanmax(TEMP_2M[loc,:])+5)
     remove_axis_spines(ax1)
 
+    pressure = PRESSURE[loc,:]
+    mask = np.isfinite(pressure)
+
     ax2 = plt.subplot(412)
     ax2.grid(axis='y',linewidth=0.5)
-    ax2.plot(mtime, PRESSURE[loc,:],color='brown')
-    ax2.fill_between(mtime, PRESSURE[loc,:], 850, color='brown',**kwargs)
+    ax2.plot(mtime[mask], pressure[mask],color='brown')
+    ax2.fill_between(mtime[mask], pressure[mask], 850, color='brown',**kwargs)
     ax2.set_title('Pressure (hPa)')
     plt.xlim(datetime(2017,10,29,0),datetime(2017,10,30,12))
     ax2.set_ylim(np.nanmin(PRESSURE[loc,:])-20,np.nanmax(PRESSURE[loc,:])+1)
